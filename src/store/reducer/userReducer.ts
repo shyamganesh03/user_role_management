@@ -1,10 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  user: {
-    username: "",
-    role: "",
-  },
+  username: "",
+  role: "",
 };
 
 const userReducer = createSlice({
@@ -12,10 +10,13 @@ const userReducer = createSlice({
   initialState,
   reducers: {
     setUsername: (state, action) => {
-      state.user.username = action.payload;
+      console.log({ action });
+      state.username = action.payload;
     },
     setRole: (state, action) => {
-      state.user.role = action.payload;
+      console.log({ action });
+
+      state.role = action.payload;
     },
   },
 });

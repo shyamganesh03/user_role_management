@@ -1,3 +1,14 @@
+import { useEffect } from "react";
+import {
+  getAuth,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setRole, setUsername } from "@/store/reducer/userReducer";
+import { fetchUserData } from "@/api/ruotes";
+import { useForm } from "react-hook-form";
 import { PasswordInput } from "@/components/common/PasswordInput";
 import { Icons } from "@/components/icon";
 import { Button } from "@/components/ui/button";
@@ -11,7 +22,6 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import PeopleCommunicatingImage from "@/assets/people-communicating.avif";
-import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
@@ -20,34 +30,34 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
-import { fetchUserData } from "@/api/ruotes";
-import { useDispatch } from "react-redux";
-import { setRole, setUsername } from "@/store/reducer/userReducer";
-import { useEffect } from "react";
 
 const SignIn = () => {
   const form = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const auth = getAuth();
+
   useEffect(() => {
-    if (auth.currentUser) {
-      navigate("/dashboard");
-    }
-  }, [auth.currentUser]);
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const getUserDetails = await fetchUserData();
+        dispatch(setUsername(getUserDetails?.username));
+        dispatch(setRole(getUserDetails?.role));
+        navigate("/dashboard");
+      }
+    });
+
+    return () => unsubscribe();
+  }, [auth, dispatch, navigate]);
 
   const handleSubmit = async (data: any) => {
     const { email, password } = data;
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-
       const getUserDetails = await fetchUserData();
       dispatch(setUsername(getUserDetails?.username));
       dispatch(setRole(getUserDetails?.role));
-
       navigate("/dashboard");
     } catch (error) {
       console.error("Error during sign-in:", error);
@@ -60,7 +70,7 @@ const SignIn = () => {
 
   return (
     <div className="flex h-screen w-full flex-col lg:flex-row">
-      <div className="flex flex-col h-[30%] lg:h-full lg:w-[50%] bg-primary items-center justify-center ">
+      <div className="flex flex-col h-[30%] lg:h-full lg:w-[50%] bg-primary items-center justify-center">
         <img
           src={PeopleCommunicatingImage}
           alt="People communicating"
