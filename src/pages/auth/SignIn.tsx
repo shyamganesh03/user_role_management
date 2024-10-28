@@ -25,15 +25,21 @@ import { useNavigate } from "react-router-dom";
 import { fetchUserData } from "@/api/ruotes";
 import { useDispatch } from "react-redux";
 import { setRole, setUsername } from "@/store/reducer/userReducer";
+import { useEffect } from "react";
 
 const SignIn = () => {
   const form = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const auth = getAuth();
+  useEffect(() => {
+    if (auth.currentUser) {
+      navigate("/dashboard");
+    }
+  }, [auth.currentUser]);
 
   const handleSubmit = async (data: any) => {
     const { email, password } = data;
-    const auth = getAuth();
 
     try {
       await signInWithEmailAndPassword(auth, email, password);

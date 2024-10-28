@@ -1,3 +1,4 @@
+import Layout from "@/components/container/Layout";
 import SignIn from "@/pages/auth/SignIn";
 import Dashboard from "@/pages/Dashboard";
 import Invoices from "@/pages/Invoices";
@@ -10,9 +11,11 @@ const AppRouter = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<SignIn />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/user-management" element={<UserManagement />} />
-        <Route path="/invoice" element={<Invoices />} />
+        <Route path="/" element={<Layout />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/user-management" element={<UserManagement />} />
+          <Route path="/invoice" element={<Invoices />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
