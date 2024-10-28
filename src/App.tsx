@@ -1,14 +1,14 @@
 import { ThemeProvider } from "@/lib/components/theme-provider";
-import React from "react";
 import { Provider } from "react-redux";
 import store from "./store";
 import "./config";
+import AppRouter from "./navigation";
 
-function App({ children }: { children: React.ReactNode }) {
+function App() {
   return (
     <Provider store={store}>
       <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-        {children}
+        <AppRouter />
       </ThemeProvider>
     </Provider>
   );
