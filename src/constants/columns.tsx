@@ -8,9 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
-import { useDispatch } from "react-redux";
 import { setRole } from "@/store/reducer/userReducer";
-import { useNavigate } from "react-router-dom";
 
 export type UserListType = {
   username: string;
@@ -23,11 +21,11 @@ export type invoiceListType = {
   amount: string;
 };
 
-export const userColumns: ColumnDef<UserListType>[] = [
+export const userColumns: any = ({ dispatch, navigate }: any) => [
   {
     accessorKey: "username",
     header: "User Name",
-    cell: ({ row }) => {
+    cell: ({ row }: any) => {
       const value = row.original.username || "-";
 
       return <div className="font-medium">{value}</div>;
@@ -36,7 +34,7 @@ export const userColumns: ColumnDef<UserListType>[] = [
   {
     accessorKey: "role",
     header: "Role",
-    cell: ({ row }) => {
+    cell: ({ row }: any) => {
       const value = row.original.role || "-";
 
       return <div className="font-medium">{value}</div>;
@@ -46,9 +44,6 @@ export const userColumns: ColumnDef<UserListType>[] = [
     accessorKey: "menu",
     header: "Menu",
     cell: () => {
-      const dispatch = useDispatch();
-      const navigate = useNavigate();
-
       return (
         <div className="w-[100px]">
           <DropdownMenu>

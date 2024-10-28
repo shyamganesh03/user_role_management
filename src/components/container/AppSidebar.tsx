@@ -12,45 +12,45 @@ import { useDispatch, useSelector } from "react-redux";
 import { setRole } from "@/store/reducer/userReducer";
 import { useEffect, useState } from "react";
 
-const userDetails: any = useSelector((state: any) => state.user);
-
-const dispatch = useDispatch();
-
-const items = [
-  {
-    title: "Dashboard",
-    url: "/dashboard",
-    icon: LayoutDashboard,
-  },
-  {
-    title: "User Management",
-    url: "/user-management",
-    icon: Users2,
-  },
-  {
-    title: "Invoices",
-    url: "/invoice",
-    icon: NotebookIcon,
-  },
-];
-
-const [menuItems, setItem] = useState(items);
-
-useEffect(() => {
-  if (userDetails?.role === "user") {
-    const newItem = items?.filter((item) => item?.title !== "Invoice");
-
-    setItem(newItem);
-  } else {
-    setItem(menuItems);
-  }
-}, [userDetails]);
-
-const handleUserRole = () => {
-  dispatch(setRole("admin"));
-};
-
 export function AppSidebar() {
+  const userDetails: any = useSelector((state: any) => state.user);
+
+  const dispatch = useDispatch();
+
+  const items = [
+    {
+      title: "Dashboard",
+      url: "/dashboard",
+      icon: LayoutDashboard,
+    },
+    {
+      title: "User Management",
+      url: "/user-management",
+      icon: Users2,
+    },
+    {
+      title: "Invoices",
+      url: "/invoice",
+      icon: NotebookIcon,
+    },
+  ];
+
+  const [menuItems, setItem] = useState(items);
+
+  useEffect(() => {
+    if (userDetails?.role === "user") {
+      const newItem = items?.filter((item) => item?.title !== "Invoice");
+
+      setItem(newItem);
+    } else {
+      setItem(menuItems);
+    }
+  }, [userDetails]);
+
+  const handleUserRole = () => {
+    dispatch(setRole("admin"));
+  };
+
   return (
     <Sidebar>
       <SidebarContent className="py-4 pl-4">
