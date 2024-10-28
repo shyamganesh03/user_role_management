@@ -3,19 +3,23 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { userColumns, UserListType } from "@/constants/columns";
 import { Plus } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const UserManagement = () => {
-  const userDetails: any = useSelector((state: any) => state);
-  const [userList, _] = useState<UserListType[]>([
-    {
-      username: userDetails?.username || "",
-      role: userDetails?.role || "",
-      menu: "",
-    },
-  ]);
+  const userDetails: any = useSelector((state: any) => state.user);
+  const [userList, setUserDetails] = useState<UserListType[]>([]);
+
+  useEffect(() => {
+    setUserDetails([
+      {
+        username: userDetails?.username || "",
+        role: userDetails?.role || "",
+        menu: "",
+      },
+    ]);
+  }, [userDetails]);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

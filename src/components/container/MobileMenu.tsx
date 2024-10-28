@@ -6,21 +6,25 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { items } from "@/constants/menuItems";
 import { setRole } from "@/store/reducer/userReducer";
+import { HamburgerMenuIcon } from "@radix-ui/react-icons";
+import { useTheme } from "@/lib/components/theme-provider";
 
-const MobileNav = () => {
+const MobileNav = ({ userDetails }: any) => {
   const [open, setOpen] = React.useState(false);
-  const userDetails: any = useSelector((state: any) => state.user);
 
   const dispatch = useDispatch();
 
   const [menuItems, setItem] = React.useState(items);
+  const { theme } = useTheme();
 
   React.useEffect(() => {
     if (userDetails?.role === "user") {
-      const newItem = items?.filter((item) => item?.title !== "Invoice");
+      const newItem = items?.filter(
+        (item) => item?.title !== "User Management"
+      );
 
       setItem(newItem);
     } else {
@@ -33,47 +37,22 @@ const MobileNav = () => {
   };
 
   return (
-    <div className="flex px-4 lg:hidden">
+    <div className="flex lg:hidden pt-2">
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
           <Button
             variant="ghost"
-            className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
+            className="absolute top-2 left-4 text-base bg-transparent hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
           >
-            <svg
-              strokeWidth="1.5"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-            >
-              <path
-                d="M3 5H11"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              ></path>
-              <path
-                d="M3 12H16"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              ></path>
-              <path
-                d="M3 19H21"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              ></path>
-            </svg>
-            <span className="sr-only">Toggle Menu</span>
+            <HamburgerMenuIcon
+              color={
+                theme === "dark" ? "hsl(0,0%,100%)" : "hsl(215 27.9% 16.9%)"
+              }
+            />
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="pr-0">
-          <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
+          <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 ">
             <div className="flex flex-col space-y-3">
               {menuItems?.map(
                 (item: any) =>
@@ -90,8 +69,12 @@ const MobileNav = () => {
             </div>
           </ScrollArea>
           {userDetails?.role === "user" && (
-            <div className="flex flex-1 flex-col-reverse  pb-4">
-              <Button onClick={handleUserRole} variant="ghost">
+            <div className="flex flex-1 flex-col-reverse pb-4 pr-4">
+              <Button
+                onClick={handleUserRole}
+                variant="ghost"
+                className="bg-accent"
+              >
                 Rest Role
               </Button>
             </div>

@@ -54,7 +54,7 @@ const Dashboard = () => {
     ],
   };
   return (
-    <div className="h-screen w-full flex gap-4 flex-col py-4">
+    <div className="h-screen w-full flex gap-4 flex-col py-4 px-4 lg:px-0">
       <div className="flex flex-col lg:flex-row gap-8 w-full">
         <Card className="p-4">
           <Pie data={pieChartDataSet} />

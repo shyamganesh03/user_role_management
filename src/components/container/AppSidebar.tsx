@@ -6,22 +6,21 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Button } from "../ui/button";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setRole } from "@/store/reducer/userReducer";
 import { useEffect, useState } from "react";
 import { items } from "@/constants/menuItems";
 
-export function AppSidebar() {
-  const userDetails: any = useSelector((state: any) => state.user);
-
+export function AppSidebar({ userDetails }: any) {
   const dispatch = useDispatch();
 
   const [menuItems, setItem] = useState(items);
 
   useEffect(() => {
     if (userDetails?.role === "user") {
-      const newItem = items?.filter((item) => item?.title !== "Invoice");
-
+      const newItem = items?.filter(
+        (item) => item?.title !== "User Management"
+      );
       setItem(newItem);
     } else {
       setItem(menuItems);
@@ -30,10 +29,11 @@ export function AppSidebar() {
 
   const handleUserRole = () => {
     dispatch(setRole("admin"));
+    setItem(menuItems);
   };
 
   return (
-    <Sidebar className="hidden lg:flex">
+    <Sidebar className="hidden lg:flex" key={userDetails?.role}>
       <SidebarContent className="py-4 pl-4">
         <SidebarMenu className="mt-10 gap-4">
           {menuItems?.map((item) => (
@@ -48,9 +48,13 @@ export function AppSidebar() {
           ))}
         </SidebarMenu>
         {userDetails?.role === "user" && (
-          <div className="flex flex-1 flex-col-reverse  pb-4">
-            <Button onClick={handleUserRole} variant="ghost">
-              Rest Role
+          <div className="flex flex-1 flex-col-reverse  pb-4 pr-4">
+            <Button
+              onClick={handleUserRole}
+              variant="ghost"
+              className="bg-accent"
+            >
+              Change Role to Admin
             </Button>
           </div>
         )}

@@ -10,13 +10,10 @@ const userReducer = createSlice({
   initialState,
   reducers: {
     setUsername: (state, action) => {
-      console.log({ action });
-      state.username = action.payload;
+      return { ...state, username: action?.payload };
     },
     setRole: (state, action) => {
-      console.log({ action });
-
-      state.role = action.payload;
+      return { ...state, role: action?.payload };
     },
   },
 });

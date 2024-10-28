@@ -27,7 +27,6 @@ export const userColumns: any = ({ dispatch, navigate }: any) => [
     header: "User Name",
     cell: ({ row }: any) => {
       const value = row.original.username || "-";
-
       return <div className="font-medium">{value}</div>;
     },
   },
@@ -47,7 +46,7 @@ export const userColumns: any = ({ dispatch, navigate }: any) => [
       return (
         <div className="w-[100px]">
           <DropdownMenu>
-            <DropdownMenuTrigger>
+            <DropdownMenuTrigger className="bg-accent">
               <MoreHorizontal className="h-4 w-4" />
             </DropdownMenuTrigger>
             <DropdownMenuContent>
@@ -58,6 +57,7 @@ export const userColumns: any = ({ dispatch, navigate }: any) => [
                   dispatch(setRole("user"));
                   navigate("/invoice");
                 }}
+                className="cursor-pointer"
               >
                 user
               </DropdownMenuItem>
