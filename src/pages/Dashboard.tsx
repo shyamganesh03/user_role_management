@@ -9,10 +9,10 @@ import {
   PointElement,
   LineElement,
 } from "chart.js";
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
+import { Card } from "@/components/ui/card";
 import { ArrowDownWideNarrow, ArrowUpWideNarrow } from "lucide-react";
 import { months } from "@/lib/utils";
+import SimpleCard from "@/components/common/SimpleCard";
 ChartJS.register(
   ArcElement,
   Tooltip,
@@ -59,20 +59,16 @@ const Dashboard = () => {
         <Card className="p-4">
           <Pie data={pieChartDataSet} />
         </Card>
-        <Card className="p-4 lg:w-[300px] h-[200px]">
-          <CardTitle>Todays Sale</CardTitle>
-          <CardContent className="flex flex-row gap-4 mt-6">
-            <Label className="text-lg">$15,000</Label>
-            <ArrowUpWideNarrow />
-          </CardContent>
-        </Card>
-        <Card className="p-4 lg:w-[300px] h-[200px]">
-          <CardTitle>Total Customer</CardTitle>
-          <CardContent className="flex flex-row gap-4 mt-6">
-            <Label className="text-lg">12,0000</Label>
-            <ArrowDownWideNarrow />
-          </CardContent>
-        </Card>
+        <SimpleCard
+          title={"Todays Sale"}
+          description={"$ 15,000"}
+          icon={<ArrowUpWideNarrow />}
+        />
+        <SimpleCard
+          title={"Total Customer"}
+          description={"$ 12,000"}
+          icon={<ArrowDownWideNarrow />}
+        />
       </div>
       <Card>
         <Line data={lineChartDataSet} />

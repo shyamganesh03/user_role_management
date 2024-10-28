@@ -5,6 +5,7 @@ import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { ArrowDownWideNarrow, Plus } from "lucide-react";
 import { DataTable } from "@/components/common/DataTable";
 import { invoiceColumns } from "@/constants/columns";
+import SimpleCard from "@/components/common/SimpleCard";
 
 const Invoices = () => {
   const data = [
@@ -30,27 +31,21 @@ const Invoices = () => {
         </Button>
       </div>
       <div className="flex flex-col lg:flex-row gap-4">
-        <Card className="p-4 lg:w-[300px] h-[200px]">
-          <CardTitle>Paid Amount</CardTitle>
-          <CardContent className="flex flex-row gap-4 mt-6">
-            <Label className="text-lg">$ 12</Label>
-            <ArrowDownWideNarrow />
-          </CardContent>
-        </Card>
-        <Card className="p-4 lg:w-[300px] h-[200px]">
-          <CardTitle>Due Amount</CardTitle>
-          <CardContent className="flex flex-row gap-4 mt-6">
-            <Label className="text-lg">$ 20,000</Label>
-            <ArrowDownWideNarrow />
-          </CardContent>
-        </Card>
-        <Card className="p-4 lg:w-[300px] h-[200px]">
-          <CardTitle>Total Invoice</CardTitle>
-          <CardContent className="flex flex-row gap-4 mt-6">
-            <Label className="text-lg">28</Label>
-            <ArrowDownWideNarrow />
-          </CardContent>
-        </Card>
+        <SimpleCard
+          title={"Paid Amount"}
+          description={"$ 12"}
+          icon={<ArrowDownWideNarrow />}
+        />
+        <SimpleCard
+          title={"Due Amount"}
+          description={"$ 20,000"}
+          icon={<ArrowDownWideNarrow />}
+        />
+        <SimpleCard
+          title={"Total Invoice"}
+          description={"28"}
+          icon={<ArrowDownWideNarrow />}
+        />
       </div>
       <div>
         <Card className="p-4">

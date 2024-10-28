@@ -1,5 +1,3 @@
-import { LayoutDashboard, NotebookIcon, Users2 } from "lucide-react";
-
 import {
   Sidebar,
   SidebarContent,
@@ -11,29 +9,12 @@ import { Button } from "../ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { setRole } from "@/store/reducer/userReducer";
 import { useEffect, useState } from "react";
+import { items } from "@/constants/menuItems";
 
 export function AppSidebar() {
   const userDetails: any = useSelector((state: any) => state.user);
 
   const dispatch = useDispatch();
-
-  const items = [
-    {
-      title: "Dashboard",
-      url: "/dashboard",
-      icon: LayoutDashboard,
-    },
-    {
-      title: "User Management",
-      url: "/user-management",
-      icon: Users2,
-    },
-    {
-      title: "Invoices",
-      url: "/invoice",
-      icon: NotebookIcon,
-    },
-  ];
 
   const [menuItems, setItem] = useState(items);
 
@@ -52,7 +33,7 @@ export function AppSidebar() {
   };
 
   return (
-    <Sidebar>
+    <Sidebar className="hidden lg:flex">
       <SidebarContent className="py-4 pl-4">
         <SidebarMenu className="mt-10 gap-4">
           {menuItems?.map((item) => (
